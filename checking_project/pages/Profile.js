@@ -1,35 +1,32 @@
-import Link from "next/link";
 import React, { useEffect } from "react";
 import { signIn, useSession } from "next-auth/react";
 import { useForm } from "react-hook-form";
-import Layout from "../components/Layout";
-import { getError } from "../utils/error";
 import { toast } from "react-toastify";
-import { useRouter } from "next/router";
+import { getError } from "../utils/error";
 import axios from "axios";
+import Layout from "../components/Layout";
+import { useRouter } from "next/router";
 
-export default function Register() {
+export default function Profile() {
   const { data: session } = useSession();
-
   const router = useRouter();
-  const { redirect } = router.query;
-
-  useEffect(() => {
-    if (session?.user) {
-      router.push(redirect || "/");
-    }
-  }, [router, session, redirect]);
 
   const {
     handleSubmit,
     register,
     getValues,
+    setValue,
     formState: { errors },
   } = useForm();
 
+  useEffect(() => {
+    setValue("name", session.user.name);
+    setValue("email", session.user.email);
+  }, [session.user, setValue]);
+
   const submitHandler = async ({ name, email, password }) => {
     try {
-      await axios.post("/api/signup", {
+      await axios.put("/api/update", {
         name,
         email,
         password,
@@ -41,6 +38,9 @@ export default function Register() {
         password,
       });
 
+      toast.success("Profile updated successfully");
+      router.push("/");
+
       if (result.error) {
         toast.error(result.error);
       }
@@ -50,12 +50,13 @@ export default function Register() {
   };
 
   return (
-    <Layout title="Create Account">
+    <Layout title="Profile">
       <form
         className="mx-auto max-w-screen-md"
         onSubmit={handleSubmit(submitHandler)}
       >
-        <h1 className="mb-4 text-xl">Create Account</h1>
+        <h1 className="mb-4 text-xl">Update Profile</h1>
+
         <div className="mb-4">
           <label htmlFor="name">Name</label>
           <input
@@ -76,6 +77,8 @@ export default function Register() {
           <label htmlFor="email">Email</label>
           <input
             type="email"
+            className="w-full"
+            id="email"
             {...register("email", {
               required: "Please enter email",
               pattern: {
@@ -83,29 +86,27 @@ export default function Register() {
                 message: "Please enter valid email",
               },
             })}
-            className="w-full"
-            id="email"
-          ></input>
+          />
           {errors.email && (
             <div className="text-red-500">{errors.email.message}</div>
           )}
         </div>
+
         <div className="mb-4">
           <label htmlFor="password">Password</label>
           <input
+            className="w-full"
             type="password"
+            id="password"
             {...register("password", {
-              required: "Please enter password",
               minLength: { value: 6, message: "password is more than 5 chars" },
             })}
-            className="w-full"
-            id="password"
-            autoFocus
-          ></input>
+          />
           {errors.password && (
             <div className="text-red-500 ">{errors.password.message}</div>
           )}
         </div>
+
         <div className="mb-4">
           <label htmlFor="confirmPassword">Confirm Password</label>
           <input
@@ -113,7 +114,6 @@ export default function Register() {
             type="password"
             id="confirmPassword"
             {...register("confirmPassword", {
-              required: "Please enter confirm password",
               validate: (value) => value === getValues("password"),
               minLength: {
                 value: 6,
@@ -131,15 +131,12 @@ export default function Register() {
               <div className="text-red-500 ">Password do not match</div>
             )}
         </div>
-
-        <div className="mb-4 ">
-          <button className="primary-button">Register</button>
-        </div>
-        <div className="mb-4 ">
-          Already have an account? &nbsp;
-          <Link href={`/Login?redirect=${redirect || "/"}`}>Log in</Link>
+        <div className="mb-4">
+          <button className="primary-button">Update Profile</button>
         </div>
       </form>
     </Layout>
   );
 }
+
+Profile.auth = true;

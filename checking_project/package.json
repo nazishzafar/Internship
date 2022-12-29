@@ -1,0 +1,38 @@
+{
+  "name": "checking_project",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@headlessui/react": "^1.7.7",
+    "@next/font": "13.1.1",
+    "@paypal/react-paypal-js": "^7.8.2",
+    "@reduxjs/toolkit": "^1.9.1",
+    "axios": "^1.2.1",
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^16.0.3",
+    "eslint": "8.30.0",
+    "eslint-config-next": "13.1.1",
+    "js-cookie": "^3.0.1",
+    "mongoose": "^6.8.1",
+    "next": "13.1.1",
+    "next-auth": "^4.18.7",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-hook-form": "^7.41.1",
+    "react-icons": "^4.7.1",
+    "react-redux": "^8.0.5",
+    "react-toastify": "^9.1.1"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.13",
+    "postcss": "^8.4.20",
+    "tailwind": "^4.0.0",
+    "tailwindcss": "^3.2.4"
+  }
+}

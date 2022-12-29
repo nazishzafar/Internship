@@ -26,7 +26,6 @@ export default function Register() {
     getValues,
     formState: { errors },
   } = useForm();
-
   const submitHandler = async ({ name, email, password }) => {
     try {
       await axios.post("/api/signup", {
@@ -40,7 +39,6 @@ export default function Register() {
         email,
         password,
       });
-
       if (result.error) {
         toast.error(result.error);
       }
@@ -48,7 +46,6 @@ export default function Register() {
       toast.error(getError(err));
     }
   };
-
   return (
     <Layout title="Create Account">
       <form
