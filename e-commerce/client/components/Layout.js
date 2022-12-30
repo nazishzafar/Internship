@@ -1,5 +1,6 @@
 import React, { ReactNode, useState, useEffect } from "react";
 import Head from "next/head";
+import Script from "next/script";
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../utils/store";
@@ -8,18 +9,13 @@ import "react-toastify/dist/ReactToastify.css";
 import { Menu } from "@headlessui/react";
 import Cookies from "js-cookie";
 import { signOut, useSession } from "next-auth/react";
-import DropdownLink from "../components/DropDownLink";
+import DropdownLink from "./DropDownLink";
 import { cart_Reset } from "../pages/product/cartSlice";
 
-interface props {
-  children: ReactNode;
-  title: String;
-}
-
-const Layout = ({ title, children }: props) => {
+const Layout = ({ title, children }) => {
   const { status, data: session } = useSession();
   const dispatch = useDispatch();
-  const { cart } = useSelector((state: RootState) => state.cart);
+  const { cart } = useSelector((state) => state.cart);
 
   const [cartItemsCount, setCartItemsCount] = useState(0);
   useEffect(() => {
@@ -36,10 +32,11 @@ const Layout = ({ title, children }: props) => {
 
   return (
     <>
+      <Script src="https://cdn.tailwindcss.com"></Script>
       <Head>
         <title>{title ? title + "-E-commerce" : "E-commerce"}</title>
         <meta name="description" content="E-Commerce Website" />
-        <script src="https://cdn.tailwindcss.com"></script>
+
         <link rel="icon" href="/favicon.ico" />
       </Head>
 

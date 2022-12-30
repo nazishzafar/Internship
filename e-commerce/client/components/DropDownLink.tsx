@@ -1,7 +1,7 @@
 import Link from "next/link";
 import React from "react";
 
-const DropDownLink = (props) => {
+const DropDownLink = (props: any) => {
   let { href, children, ...rest } = props;
 
   return (

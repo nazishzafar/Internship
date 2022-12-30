@@ -1,12 +1,13 @@
+import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../pages/product/cartSlice";
 import { RootState } from "../utils/store";
 
-const ProductItems = ({ product }: props) => {
+const ProductItems = ({ product }) => {
   const dispatch = useDispatch();
-  const { cart } = useSelector((state: RootState) => state.cart);
+  const { cart } = useSelector((state) => state.cart);
 
   const addToCartHandler = (product) => {
     const existItem = cart.cartItems.find((x) => x.slug === product.slug);
@@ -26,9 +27,11 @@ const ProductItems = ({ product }: props) => {
   return (
     <div className="card">
       <Link href={`/product/${product.slug}`}>
-        <img
+        <Image
           src={product.image}
           alt={product.name}
+          width={915}
+          height={915}
           className="rounded shadow"
         />
       </Link>

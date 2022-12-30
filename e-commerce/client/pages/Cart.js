@@ -7,23 +7,19 @@ import { RootState } from "../utils/store";
 import { FaTrashAlt } from "react-icons/fa";
 import { removeCartItem } from "./product/cartSlice";
 import { useRouter } from "next/router";
-import { addToCart } from "../pages/product/cartSlice";
+import { addToCart } from "./product/cartSlice";
 import dynamic from "next/dynamic";
-
-interface Items {
-  item: Object;
-}
 
 const Cart = () => {
   const router = useRouter();
-  const { cart } = useSelector((state: RootState) => state.cart);
+  const { cart } = useSelector((state) => state.cart);
   const dispatch = useDispatch();
 
-  const removeItemHandler = (item: Items) => {
+  const removeItemHandler = (item) => {
     dispatch({ type: removeCartItem, payload: item });
   };
 
-  const updateCartHandler = (item: Items, qty) => {
+  const updateCartHandler = (item, qty) => {
     const quantity = Number(qty);
     dispatch({
       type: addToCart,

@@ -10,7 +10,7 @@ import {
   Fetch_success1,
 } from "./product/cartSlice";
 
-const OrderHistory = () => {
+export function OrderHistory() {
   const { cart } = useSelector((state) => state.cart);
   const dispatch = useDispatch();
 
@@ -79,7 +79,7 @@ const OrderHistory = () => {
       )}
     </Layout>
   );
-};
+}
 
 OrderHistory.auth = true;
 export default OrderHistory;

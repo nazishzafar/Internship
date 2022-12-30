@@ -10,8 +10,9 @@ import Cookies from "js-cookie";
 import { signOut, useSession } from "next-auth/react";
 import DropdownLink from "./DropDownLink";
 import { cart_Reset } from "../pages/product/cartSlice";
+import Script from "next/script";
 
-const Layout = ({ title, children }) => {
+export function Layout({ title, children }) {
   const { status, data: session } = useSession();
   const dispatch = useDispatch();
   const { cart } = useSelector((state) => state.cart);
@@ -31,12 +32,13 @@ const Layout = ({ title, children }) => {
 
   return (
     <>
+      <Script src="https://cdn.tailwindcss.com"></Script>
       <Head>
         <title>{title ? title + "-E-commerce" : "E-commerce"}</title>
         <meta name="description" content="E-Commerce Website" />
-        <script src="https://cdn.tailwindcss.com"></script>
+
         <link rel="icon" href="/favicon.ico" />
-        <link href="/dist/output.css" rel="stylesheet"></link>
+        {/* <link href="/dist/output.css" rel="stylesheet"></link> */}
       </Head>
 
       <ToastContainer position="bottom-center" limit={1} />
@@ -117,6 +119,6 @@ const Layout = ({ title, children }) => {
       </div>
     </>
   );
-};
+}
 
 export default Layout;

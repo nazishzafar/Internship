@@ -1,13 +1,14 @@
 import Link from "next/link";
 import React from "react";
+import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../pages/product/cartSlice";
 
-const ProductItems = ({ product }) => {
+export function ProductItems({ product }) {
   const dispatch = useDispatch();
   const { cart } = useSelector((state) => state.cart);
 
-  const addToCartHandler = (product) => {
+  function addToCartHandler(product) {
     const existItem = cart.cartItems.find((x) => x.slug === product.slug);
     const quantity = existItem ? existItem.quantity + 1 : 1;
 
@@ -20,12 +21,12 @@ const ProductItems = ({ product }) => {
       type: addToCart,
       payload: { ...product, quantity },
     });
-  };
+  }
 
   return (
     <div className="card">
       <Link href={`/product/${product.slug}`}>
-        <img
+        <Image
           src={product.image}
           alt={product.name}
           className="rounded shadow"
@@ -49,6 +50,6 @@ const ProductItems = ({ product }) => {
       </div>
     </div>
   );
-};
+}
 
 export default ProductItems;
